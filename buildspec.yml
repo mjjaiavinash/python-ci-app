@@ -1,0 +1,29 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+    commands:
+      - pip install -r requirements.txt
+
+  pre_build:
+    commands:
+      - echo "Running linter..."
+      - pip install flake8
+      - flake8 app.py --max-line-length=120
+
+  build:
+    commands:
+      - echo "Running tests..."
+      - pytest test_app.py -v
+
+  post_build:
+    commands:
+      - echo "Build completed successfully"
+
+artifacts:
+  files:
+    - app.py
+    - requirements.txt
+  name: python-app-artifact
